@@ -1,0 +1,119 @@
+html {
+    /* make sure it is at least as tall as the viewport */
+    min-height: 100%;
+    position: relative;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    /* force the body element to match the height of the HTML element */
+    height: 100%;
+}
+
+#mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+}
+
+#appContainer {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #555;
+    padding: 1em;
+}
+
+/* override app container width for tablet */
+@media only screen and (max-width: 1900px) {
+    #appContainer {
+        width: 75%;
+    }
+}
+
+#buttonContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+button {
+    height: 2em;
+    padding: 5px;
+    font-size: 1.5em;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 5px;
+    border: 1px solid #555;
+}
+
+/* button:hover {
+    background: #5fef06 !important;
+} */
+
+#timerContainer {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10em;
+    margin: 5% auto;
+}
+
+/* I don't know why the checkbox container does not take up the whole width of
+the app container, width:100% is set in main.css. Here, I use space-between to
+spread the artificial checkboxes as wide as possible and it looks good enough.
+
+- space-between: First item is flush with the start, last is flush with the end
+- space-evenly: Items have equal space around them
+- space-around: Items have a half-size space on either end
+*/
+#checkboxContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+label {
+    display: inline-block;
+    text-align: center;
+}
+
+label span {
+    display: block;
+}
+
+/* hide the checkbox */
+input[type="checkbox"] {
+    display: none;
+}
+
+/* artificial checkbox unchecked state */
+span {
+    height: 2em;
+    width: 2em;
+    border: 2px solid black;
+    border-radius: 100%;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* span:hover {
+    background: #5fef06 !important;
+} */
+
+/* artificial checkbox checked state */
+[type=checkbox]:checked + span {
+    background: #5fef06;
+}
+
+label:active {
+    /* ignore user long press */
+    -webkit-user-select: none !important;   /* Safari, Chrome*/
+    -moz-user-select: none !important;      /* Gecko (Firefox) */
+    -ms-user-select: none !important;       /* IE */
+    user-select: none;
+}
+

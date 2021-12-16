@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Quick Timer</title>
+<meta name="description" content="Light weight workout timer">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="stylesheet" href="main.css">
+<script src="timer.js"></script>
+<script>
+/*global window, document */
+(function () {
+    "use strict";
+
+    var allButtons = document.getElementsByTagName("button");
+
+    function clickHandler(event) {
+        /* jshint validthis: true */
+        this.style.backgroundColor = "#5fef06";
+        disableButtons();
+        Timer.start(event.target.value);
+    }
+
+    function disableButtons() {
+        // disable buttons so user can't click when timer is already running
+        for (var i = 0; i < allButtons.length; i += 1) {
+            allButtons[i].removeEventListener("click", clickHandler);
+        }
+    }
+
+    function resetButtons() {
+        // enable buttons and remove color indicator
+        for (var i = 0; i < allButtons.length; i += 1) {
+            allButtons[i].addEventListener("click", clickHandler, false);
+            allButtons[i].style.backgroundColor = "inherit";
+        }
+    }
+
+    window.addEventListener("load", function () {
+        // register a display function with timer
+        Timer.onUpdate(function (seconds) {
+            var mins = Math.floor(seconds / 60);
+            var secs = Math.floor(seconds % 60);
+
+            mins = mins < 10 ? "0" + mins : mins;
+            secs = secs < 10 ? "0" + secs : secs;
+
+            // console.log(mins + ":" + secs);
+            document.getElementById("timerContainer").innerText = mins + ":" + secs;
+        });
+
+        // register a finishing function with timer
+        Timer.onExpired(function () {
+            resetButtons();
+        });
+
+        // initialize button state
+        resetButtons();
+    });
+}());
+</script>
+</head>
+<body>
+    <div id="mainContainer">
+        <div id="appContainer">
+            <div id="buttonContainer">
+                <button value="30">30 secs</button>
+                <button value="60">1 min</button>
+                <button value="90">1 min 30 secs</button>
+                <button value="120">2 mins</button>
+            </div>
+            <div id="timerContainer">00:00</div>
+            <div id="checkboxContainer">
+                <label>
+                    <div>1</div>
+                    <input type="checkbox"">
+                    <span></span>
+                </label>
+                <!--the rest are the same -->
+                <label><div>2</div><input type="checkbox""><span></span></label>
+                <label><div>3</div><input type="checkbox""><span></span></label>
+                <label><div>4</div><input type="checkbox""><span></span></label>
+                <label><div>5</div><input type="checkbox""><span></span></label>
+                <label><div>6</div><input type="checkbox""><span></span></label>
+                <label><div>7</div><input type="checkbox""><span></span></label>
+                <label><div>8</div><input type="checkbox""><span></span></label>
+                <label><div>9</div><input type="checkbox""><span></span></label>
+                <label><div>10</div><input type="checkbox""><span></span></label>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
